@@ -13,8 +13,9 @@ public:
     float bandWidth;
     float disconnectRate;
 
+    float spaceSize;
     float spacePrice;
-    float onlineTime;
+    float connectedTime;
 
     Peer();
     

@@ -14,7 +14,7 @@ int Client::Connect2Sever(Server* centralServer) {
 		this->myPeer.id = curPeerId;
 	}
 	
-	centralServer->updatePeerTable(&this->myPeer);
+	centralServer->addPeer(&this->myPeer);
 	this->centralServer = centralServer;
 	return 0;
 }

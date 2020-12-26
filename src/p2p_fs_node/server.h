@@ -4,6 +4,10 @@
 #include "peer.h"
 using namespace std;
 
+/*
+central server simulator
+*/
+
 class Server{
 public:
     bool isConnected;
@@ -17,6 +21,7 @@ public:
     Server();
 
     int Connect();
-    int updatePeerTable(Peer* peer);
+    int addPeer(Peer* peer);
+    int deletePeer(int peerId);
 };
 #endif // !SERVER_H

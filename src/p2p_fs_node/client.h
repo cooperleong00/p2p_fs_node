@@ -9,7 +9,7 @@ class Client{
 
 public:
 	Peer myPeer;
-	map<string,Peer*> peerTable;
+	map<int,Peer*> peerTable;
 	Server* centralServer;
 	
 	Client();
@@ -18,7 +18,7 @@ public:
 
 	int Connect2Sever(Server* centralServer);
 
-	int keepConnection();
+	int keepConnection(int peerId);
 
 	int quitNetwork();
 
