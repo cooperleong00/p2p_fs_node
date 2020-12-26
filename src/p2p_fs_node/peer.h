@@ -1,3 +1,5 @@
+#ifndef PEER_H
+#define PEER_H
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -5,7 +7,7 @@ using namespace std;
 class Peer{
 	
 public:
-    string id;
+    int id;
     string ip;
     int port;
     float bandWidth;
@@ -14,6 +16,7 @@ public:
     float spacePrice;
     float onlineTime;
 
-    Peer(string peerId);
+    Peer();
     
 };
+#endif // !PEER_H

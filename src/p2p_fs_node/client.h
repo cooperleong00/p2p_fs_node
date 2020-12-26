@@ -1,16 +1,18 @@
+#ifndef CLIENT_H
+#define CLIENT_H
 #include <bits/stdc++.h>
 #include "server.h"
 #include "peer.h"
 using namespace std;
 
-class client{
+class Client{
 
 public:
 	Peer myPeer;
 	map<string,Peer*> peerTable;
 	Server* centralServer;
 	
-	client();
+	Client();
 	
 	int Connect2Peer(string peerId);
 
@@ -24,3 +26,5 @@ public:
 
 	int assessCrediblity();
 };
+
+#endif // !CLIENT_H
