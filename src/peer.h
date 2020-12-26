@@ -4,6 +4,16 @@ using namespace std;
 
 class Peer{
 	
-    Peer();
+public:
+    string id;
+    string ip;
+    int port;
+    float bandWidth;
+    float disconnectRate;
+
+    float spacePrice;
+    float onlineTime;
+
+    Peer(string peerId);
     
 };
