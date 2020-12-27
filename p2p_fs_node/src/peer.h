@@ -20,6 +20,7 @@ public:
     float connectedTime;
 
     Peer();
+    Peer(string ip, int port);
     
     json toJson();
 };
