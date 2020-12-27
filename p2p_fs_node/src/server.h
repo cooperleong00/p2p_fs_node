@@ -1,16 +1,18 @@
 #ifndef SERVER_H
 #define SERVER_H
 #include <bits/stdc++.h>
+#include <winsock2.h>
 #include "peer.h"
 using namespace std;
 
+#pragma comment(lib, "ws2_32.lib")
+
 /*
-central server simulator
+    local central server simulator
 */
 
 class Server{
 public:
-    bool isConnected;
     string ip;
     int port;
     int curPeerId; 
@@ -19,8 +21,8 @@ public:
     map<int,Peer*> peerTable;
 
     Server();
+    Server(string ip, int port);
 
-    int Connect();
     int addPeer(Peer* peer);
     int deletePeer(int peerId);
 };

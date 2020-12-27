@@ -1,9 +1,12 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 #include <bits/stdc++.h>
+#include <winsock2.h>
 #include "server.h"
 #include "peer.h"
 using namespace std;
+
+#pragma comment(lib, "ws2_32.lib")
 
 class Client{
 
@@ -16,7 +19,7 @@ public:
 	
 	int Connect2Peer(string peerId);
 
-	int Connect2Sever(Server* centralServer);
+	int Connect2Sever();
 
 	int keepConnection(int peerId);
 

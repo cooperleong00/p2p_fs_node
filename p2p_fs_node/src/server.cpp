@@ -2,22 +2,15 @@
 using namespace std;
 
 Server::Server(){
-	this->ip = "123.123.123.123";
-	this->port = 1234;
-	this->curPeerId = 0;
-
+	Server("127.0.0.1",1234);
 }
 
-int Server::Connect() {
-	
+Server::Server(string ip, int port) {
+	this->ip = ip;
+	this->port = port;
+	this->curPeerId = 0;
 
-	/*
-	1. using socket to connect to a real server
-	2. the real server will add this client to  node table
-	3. we need to open a listen socket in case that the server updates other nodes
-	*/
-	int oldPeerId = this->curPeerId++;
-	return oldPeerId;
+
 }
 
 int Server::addPeer(Peer* peer) {

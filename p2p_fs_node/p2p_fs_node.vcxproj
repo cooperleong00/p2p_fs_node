@@ -18,6 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\client.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\peer.cpp" />
+    <ClCompile Include="src\server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\client.h" />
+    <ClInclude Include="src\json.hpp" />
+    <ClInclude Include="src\peer.h" />
+    <ClInclude Include="src\server.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{52712CA7-1919-4841-8503-2CAC21A4B3F7}</ProjectGuid>
@@ -137,16 +149,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="client.cpp" />
-    <ClCompile Include="peer.cpp" />
-    <ClCompile Include="server.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="client.h" />
-    <ClInclude Include="peer.h" />
-    <ClInclude Include="server.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,8 +1,10 @@
 #ifndef PEER_H
 #define PEER_H
 #include <bits/stdc++.h>
+#include "json.hpp"
 
 using namespace std;
+using json = nlohmann::json;
 
 class Peer{
 	
@@ -19,5 +21,6 @@ public:
 
     Peer();
     
+    json toJson();
 };
 #endif // !PEER_H

@@ -15,25 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="client.cpp">
+    <ClCompile Include="src\client.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="peer.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="server.cpp">
+    <ClCompile Include="src\peer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\server.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="client.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\client.h">
+      <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="peer.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\json.hpp">
+      <Filter>源文件</Filter>
     </ClInclude>
-    <ClInclude Include="server.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="src\peer.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\server.h">
+      <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
