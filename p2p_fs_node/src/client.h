@@ -7,11 +7,12 @@
 using namespace std;
 
 #pragma comment(lib, "ws2_32.lib")
-#define MAX_SIZE 1024
+#define MAX_SIZE 65536
 
 class Client{
 
 public:
+	SOCKET cSocket;
 	Peer myPeer;
 	map<int,Peer*> peerTable;
 	
@@ -22,6 +23,8 @@ public:
 	int Connect2Peer(string peerId);
 
 	int Connect2Sever(string sIp, int sPort);
+
+	void listen();
 
 	int keepConnection(int peerId);
 

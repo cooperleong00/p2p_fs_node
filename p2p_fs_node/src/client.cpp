@@ -12,36 +12,52 @@ Client::Client(string ip, int port) {
 
 
 int Client::Connect2Sever(string sIp, int sPort) {
-	SOCKET cSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	cSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-	sockaddr_in sin;
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(sPort);
-	sin.sin_addr.S_un.S_addr = inet_addr(sIp.c_str());
-	int len = sizeof(sin);
+	sockaddr_in clientIn;
+	clientIn.sin_family = AF_INET;
+	clientIn.sin_port = htons(myPeer.port);
+	clientIn.sin_addr.S_un.S_addr = inet_addr(myPeer.ip.c_str());
 
-	const char* sendData = "client data\n";
-	sendto(cSocket, sendData, strlen(sendData), 0, (sockaddr*)&sin, len);
-	/*
+	if (::bind(cSocket, (sockaddr*)&clientIn, sizeof(clientIn)) == SOCKET_ERROR)
+	{
+		printf("Client: Bind error\n");
+		closesocket(cSocket);
+	}
+
+	sockaddr_in remoteIn;
+	remoteIn.sin_family = AF_INET;
+	remoteIn.sin_port = htons(sPort);
+	remoteIn.sin_addr.S_un.S_addr = inet_addr(sIp.c_str());
+
+	json sendJson;
+	sendJson["type"] = 0;
+	sendJson["data"] = myPeer.toJson();
+	string sendData = sendJson.dump();
+
+	sendto(cSocket, sendData.c_str(), sendData.length(), 0, (sockaddr*)&remoteIn, sizeof(remoteIn));
+	
+	thread t_listen(&Client::listen, this);
+	t_listen.detach();
+
+	return 0;
+}
+
+void Client::listen() {
+	sockaddr_in remoteAddr;
+	int nAddrLen = sizeof(remoteAddr);
 	while (true)
 	{
-		const char* sendData = "";
-		sendto(sclient, sendData, strlen(sendData), 0, (sockaddr*)&sin, len);
-
-		int ret = 0;
 		char recvData[MAX_SIZE];
-		ret = recvfrom(sclient, recvData, MAX_SIZE, 0, (sockaddr*)&sin, &len);
-		if (ret <= 0) break;
+		int ret = recvfrom(cSocket, recvData, MAX_SIZE, 0, (sockaddr*)&remoteAddr, &nAddrLen);
 		if (ret > 0)
 		{
 			recvData[ret] = 0x00;
-			//printf(recvData);
-			json o = json::parse(recvData);
-			for (json::iterator it = o.begin(); it != o.end(); ++it)
-				std::cout << it.key() << " : " << it.value() << "\n";
+			printf("Receiving from£º%s:%d \n", inet_ntoa(remoteAddr.sin_addr), remoteAddr.sin_port);
+			printf(recvData);
+			break;
 		}
+
 	}
-	*/
 	closesocket(cSocket);
-	return 0;
 }

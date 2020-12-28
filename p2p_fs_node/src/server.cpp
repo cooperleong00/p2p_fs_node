@@ -22,12 +22,12 @@ int Server::buildServer() {
 		return 0;
 	}
 
-	sockaddr_in sin;
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(port);
-	sin.sin_addr.S_un.S_addr = inet_addr(ip.c_str());
+	sockaddr_in serverIn;
+	serverIn.sin_family = AF_INET;
+	serverIn.sin_port = htons(port);
+	serverIn.sin_addr.S_un.S_addr = inet_addr(ip.c_str());
 
-	if (::bind(sSocket, (LPSOCKADDR)&sin, sizeof(sin)) == SOCKET_ERROR)
+	if (::bind(sSocket, (LPSOCKADDR)&serverIn, sizeof(serverIn)) == SOCKET_ERROR)
 	{
 		printf("Server: Bind error");
 		closesocket(sSocket);
@@ -51,33 +51,43 @@ void Server::listen() {
 			recvData[ret] = 0x00;
 			printf("Receiving from£º%s:%d \n", inet_ntoa(remoteAddr.sin_addr),remoteAddr.sin_port);
 			printf(recvData);
+			printf("\n");
+
+			json recvJson = json::parse(recvData);
+			Peer* tmpPeer = Peer::json2Peer(recvJson["data"]);
+			
+			if (recvJson["type"] == 0) {
+				if (PT.size() == 0) {
+					tmpPeer->id = curPeerId;
+					tmpPeer->ip = inet_ntoa(remoteAddr.sin_addr);
+					tmpPeer->port = remoteAddr.sin_port;
+					APT[curPeerId] = tmpPeer;
+					PT[curPeerId] = tmpPeer;
+					curPeerId++;
+				}
+				else if (PT.find(tmpPeer->id) == PT.end()) {
+					if (tmpPeer->id == -1)
+						tmpPeer->id = curPeerId++;
+
+					PT[tmpPeer->id] = tmpPeer;
+				}
+			}
+
+
+			/*
+			string data = jsonCreateString();
+			*/
+			const char* sendData = "Server: received\n";
+			//std::cout << sendData << std::endl;
+			//const char* sendData = "·¢ËÍ\n";
+			sendto(sSocket, sendData, strlen(sendData), 0, (sockaddr*)&remoteAddr, nAddrLen);
+			//if (i++ > 1000) break;
+
+
 			break;
 		}
-		/*
-		string data = jsonCreateString();
-
-		const char* sendData = data.c_str();
-		//std::cout << sendData << std::endl;
-		//const char* sendData = "·¢ËÍ\n";
-		sendto(sk_ptr, sendData, strlen(sendData), 0, (sockaddr*)&remoteAddr, nAddrLen);
-		//if (i++ > 1000) break;
-		*/
+		
+		
 	}
 	closesocket(sSocket);
-}
-
-int Server::addPeer(Peer* peer) {
-	if (peerTable.size() == 0) {
-		peerTable[peer->id] = peer;
-		activePeerTable[peer->id] = peer;
-	}
-	else {
-		peerTable[peer->id] = peer;
-	}
-	return 0;
-}
-
-int Server::deletePeer(int peerId) {
-	this->activePeerTable.erase(peerId);
-	return 0;
 }

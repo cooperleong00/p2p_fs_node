@@ -23,5 +23,6 @@ public:
     Peer(string ip, int port);
     
     json toJson();
+    static Peer* json2Peer(json j);
 };
 #endif // !PEER_H

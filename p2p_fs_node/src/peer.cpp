@@ -24,14 +24,27 @@ Peer::Peer(string ip, int port) {
 }
 
 json Peer::toJson() {
-	json dict;
-	dict["id"] = id;
-	dict["ip"] = ip;
-	dict["port"] = port;
-	dict["bandWidth"] = bandWidth;
-	dict["disconnectRate"] = disconnectRate;
-	dict["connectedTime"] = connectedTime;
-	dict["spaceSize"] = spaceSize;
-	dict["spacePrice"] = spacePrice;
-	return dict;
+	json j;
+	j["id"] = id;
+	j["ip"] = ip;
+	j["port"] = port;
+	j["bandWidth"] = bandWidth;
+	j["disconnectRate"] = disconnectRate;
+	j["connectedTime"] = connectedTime;
+	j["spaceSize"] = spaceSize;
+	j["spacePrice"] = spacePrice;
+	return j;
+}
+
+Peer* Peer::json2Peer(json j) {
+	Peer* p = new Peer();
+	p->id = j["id"];
+	p->ip = j["ip"];
+	p->port = j["port"];
+	p->bandWidth = j["bandWidth"];
+	p->disconnectRate = j["disconnectRate"];
+	p->connectedTime = j["connectedTime"];
+	p->spaceSize = j["spaceSize"];
+	p->spacePrice = j["spacePrice"];
+	return p;
 }

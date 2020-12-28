@@ -7,7 +7,7 @@
 using namespace std;
 
 #pragma comment(lib, "ws2_32.lib")
-#define MAX_SIZE 1024
+#define MAX_SIZE 65536
 
 /*
     local central server simulator
@@ -21,14 +21,12 @@ public:
 
     SOCKET sSocket;
 
-    map<int,Peer*> activePeerTable;
-    map<int,Peer*> peerTable;
+    map<int,Peer*> APT; // activate peer table
+    map<int,Peer*> PT; // peer table
 
     Server();
     Server(string ip, int port);
     int buildServer();
     void listen();
-    int addPeer(Peer* peer);
-    int deletePeer(int peerId);
 };
 #endif // !SERVER_H
