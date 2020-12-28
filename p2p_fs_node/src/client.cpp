@@ -20,7 +20,7 @@ int Client::Connect2Sever(string sIp, int sPort) {
 	sin.sin_addr.S_un.S_addr = inet_addr(sIp.c_str());
 	int len = sizeof(sin);
 
-	const char* sendData = "";
+	const char* sendData = "client data\n";
 	sendto(cSocket, sendData, strlen(sendData), 0, (sockaddr*)&sin, len);
 	/*
 	while (true)

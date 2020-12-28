@@ -18,7 +18,7 @@ int Server::buildServer() {
 	sSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	if (sSocket == INVALID_SOCKET)
 	{
-		printf("Server: socket error");
+		cout << "Server: socket error" << endl;
 		return 0;
 	}
 
@@ -29,7 +29,7 @@ int Server::buildServer() {
 
 	if (::bind(sSocket, (LPSOCKADDR)&sin, sizeof(sin)) == SOCKET_ERROR)
 	{
-		printf("Server: bind error");
+		printf("Server: Bind error");
 		closesocket(sSocket);
 	}
 
@@ -43,6 +43,7 @@ void Server::listen() {
 	int nAddrLen = sizeof(remoteAddr);
 	while (true)
 	{
+
 		char recvData[MAX_SIZE];
 		int ret = recvfrom(sSocket, recvData, MAX_SIZE, 0, (sockaddr*)&remoteAddr, &nAddrLen);
 		if (ret > 0)
@@ -50,6 +51,7 @@ void Server::listen() {
 			recvData[ret] = 0x00;
 			printf("Receiving from£º%s:%d \n", inet_ntoa(remoteAddr.sin_addr),remoteAddr.sin_port);
 			printf(recvData);
+			break;
 		}
 		/*
 		string data = jsonCreateString();
