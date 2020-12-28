@@ -4,6 +4,10 @@ Linux final project - A p2p file system (only peer node part)
 
 
 
+
+
+
+
 ## 设计
 
 本地的p2p节点，主要分为：
@@ -40,3 +44,44 @@ peer类主要存储节点相关信息，统一不同节点的属性接口：
 * 唯一id
 * 用于连接的外网ip和端口
 * 性能和可信度信息
+
+
+
+## 实现
+
+### Client
+
+* Client创建时，会同时创建一个Peer成员，用于之后存储该节点的相关信息
+
+* Client创建后，需要通过Connect2Server函数与Server连接；
+
+  * 具体来说，中间服务器的ip和端口是已知且固定的；Client创建一个cSocket套接字，向Server发送UDP消息。
+  * 当Server的节点表为空时，Client会自动加入网络，即Server会直接将这个Client的Peer成员加入节点表。同时当Peer的id为-1时，Server会赋予这个Peer一个id，并返回一个UDP消息告知该Client，Client将自己的id更新为这个id。
+  * 再向Server发送请求连接的消息后，Client会创建一个异步进程来进行后面的消息监听
+
+* Client和其他peer进行连接（邀请机制）：
+
+  * ```c++
+    int Client::Connect2Peer(int peerId);
+    ```
+
+  * Client向Server发送一个请求，其中包含trgId属性，指示了想要连接（邀请）的节点id。Server检查源id是否已在活动表中，如果不在，则拒绝这个请求；否则，Server向目标id对应的地址发送一个带有源id地址信息的请求，令目标节点向源节点发送连接请求；同时源节点也向目标节点发送请求。至此直接连接的通道被打开。
+
+* 退出网络
+  * 节点通知Server和自己节点表中的所有节点将自己删除。
+
+
+
+### Peer
+
+* peer的作用类似于一个存储信息的结构。
+
+* 为了方便请求信息的转换，实现了两个函数：
+
+  ```c++
+  json Peer::toJson();
+  Peer* Peer::json2Peer(json j);
+  ```
+
+  分别将一个peer对象转换成可序列化的json，以及根据json创建一个peer对象。
+
