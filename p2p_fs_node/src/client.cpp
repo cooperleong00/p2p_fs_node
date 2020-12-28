@@ -53,11 +53,31 @@ void Client::listen() {
 		if (ret > 0)
 		{
 			recvData[ret] = 0x00;
-			printf("Receiving from£º%s:%d \n", inet_ntoa(remoteAddr.sin_addr), remoteAddr.sin_port);
+			printf("Client: Receiving from£º%s:%d \n", inet_ntoa(remoteAddr.sin_addr), remoteAddr.sin_port);
 			printf(recvData);
-			break;
+			printf("\n");
 		}
 
 	}
 	closesocket(cSocket);
+}
+
+int Client::Connect2Peer(int peerId) {
+	return 0;
+}
+
+int Client::keepConnection(int peerId) {
+	return 0;
+}
+
+int Client::quitNetwork() {
+	return 0;
+}
+
+int Client::assessPerformance() {
+	return 0;
+}
+
+int Client::assessCrediblity() {
+	return 0;
 }

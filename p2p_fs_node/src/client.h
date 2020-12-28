@@ -20,7 +20,7 @@ public:
 
 	Client(string ip, int port);
 	
-	int Connect2Peer(string peerId);
+	int Connect2Peer(int peerId);
 
 	int Connect2Sever(string sIp, int sPort);
 
