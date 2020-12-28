@@ -4,10 +4,6 @@ Linux final project - A p2p file system (only peer node part)
 
 
 
-
-
-
-
 ## 设计
 
 本地的p2p节点，主要分为：
@@ -85,3 +81,8 @@ peer类主要存储节点相关信息，统一不同节点的属性接口：
 
   分别将一个peer对象转换成可序列化的json，以及根据json创建一个peer对象。
 
+
+
+## 效果
+
+![image-20201228212935289](README.assets/image-20201228212935289.png)
