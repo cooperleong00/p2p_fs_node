@@ -24,5 +24,6 @@ public:
     
     json toJson();
     static Peer* json2Peer(json j);
+
 };
 #endif // !PEER_H

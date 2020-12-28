@@ -73,10 +73,38 @@ void Server::listen() {
 				json sendJson;
 				sendJson["type"] = 5;
 				sendJson["data"] = tmpPeer->toJson();
+				sendJson["trgId"] = -1;
 				string sendData = sendJson.dump();
 
 				sendto(sSocket, sendData.c_str(), sendData.length(), 0, (sockaddr*)&remoteIn, inLen);
 
+			}
+			else if (recvJson["type"] == 1) {
+				if (APT.find(tmpPeer->id) == APT.end()) {
+					printf("Non activated peer must be invited first\n");
+				}
+				else {
+					Peer* targetPeer = PT[recvJson["trgId"]];
+					APT[targetPeer->id] = targetPeer;
+					remoteIn.sin_addr.S_un.S_addr = inet_addr(targetPeer->ip.c_str());
+					remoteIn.sin_port = htons(targetPeer->port);
+					inLen = sizeof(remoteIn);
+
+					json sendJson;
+					sendJson["type"] = 2;
+					sendJson["data"] = tmpPeer->toJson();
+					sendJson["trgId"] = -1;
+					string sendData = sendJson.dump();
+
+					sendto(sSocket, sendData.c_str(), sendData.length(), 0, (sockaddr*)&remoteIn, inLen);
+				}
+			}
+
+			else if (recvJson["type"] == 3) {
+				if (APT.find(tmpPeer->id) != APT.end())
+					APT.erase(tmpPeer->id);
+				if (PT.find(tmpPeer->id) != PT.end())
+					PT.erase(tmpPeer->id);
 			}
 
 		}

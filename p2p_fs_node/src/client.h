@@ -12,9 +12,11 @@ using namespace std;
 class Client{
 
 public:
+	string serverIp;
+	int serverPort;
 	SOCKET cSocket;
 	Peer myPeer;
-	map<int,Peer*> peerTable;
+	map<int,Peer*> PT; // peerTable
 	
 	Client();
 
